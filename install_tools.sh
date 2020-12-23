@@ -61,6 +61,7 @@ cd magic-8.3.78
 ./configure
 make
 sudo make install
+echo "set ngbehavior=hs" >> $HOME/.spiceinit
 cd $START_PWD
 
 echo "# Installing klayout"
