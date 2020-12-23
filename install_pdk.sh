@@ -26,7 +26,7 @@ cd sky130
 make
 make install
 cd ~/skywater
-cp ~/skywater/pdk/skywater130/sky130A/libs.tech/magic/sky130A.magicrc ~/magicrc
+cp ~/skywater/pdk/skywater130/sky130A/libs.tech/magic/sky130A.magicrc ~/.magicrc
 
 echo "# Installing xschem sky130"
 git clone https://github.com/StefanSchippers/xschem_sky130.git
