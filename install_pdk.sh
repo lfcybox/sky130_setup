@@ -21,11 +21,13 @@ git clone git://opencircuitdesign.com/open_pdks
 cd open_pdks
 git checkout open_pdks-1.0
 mkdir -p $HOME/skywater/pdk/skywater130
-./configure --with-sky130-source=$HOME/skywater/skywater-pdk --with-sky130-local-path=$HOME/skywater/pdk/skywater130 --with-ef-style
+# ./configure --with-sky130-source=$HOME/skywater/skywater-pdk --with-sky130-local-path=$HOME/skywater/pdk/skywater130 --with-ef-style
+./configure --with-sky130-source=$HOME/skywater/skywater-pdk --with-sky130-local-path=$HOME/skywater/pdk/skywater130
 cd sky130
 make
 make install
 cd ~/skywater
+cp ~/skywater/pdk/skywater130/sky130A/libs.tech/magic/sky130A.magicrc ~/magicrc
 
 echo "# Installing xschem sky130"
 git clone https://github.com/StefanSchippers/xschem_sky130.git
