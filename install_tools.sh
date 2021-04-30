@@ -70,7 +70,7 @@ sudo apt-get install -f -y
 
 echo "# Installing netgen"
 tar zxvf netgen-1.5.157.tgz
-cd netget-1.5.157
+cd netgen-1.5.157
 ./configure
 make
 sudo make install
