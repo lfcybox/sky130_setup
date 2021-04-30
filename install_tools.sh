@@ -26,7 +26,8 @@ sudo apt-get install -y gengetopt help2man groff pod2pdf bison flex libhpdf-dev 
 sudo apt-get install -y libopenmpi-dev 
 
 echo "Downloading files."
-wget -O ngspice-33.tar.gz https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/33/ngspice-33.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fngspice%2Ffiles%2Flatest%2Fdownload&ts=1604924821
+#wget -O ngspice-33.tar.gz https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/33/ngspice-33.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fngspice%2Ffiles%2Flatest%2Fdownload&ts=1604924821
+wget http://sourceforge.net/projects/ngspice/files/ng-spice-rework/34/ngspice-34.tar.gz
 wget http://opencircuitdesign.com/magic/archive/magic-8.3.78.tgz
 wget http://opencircuitdesign.com/netgen/archive/netgen-1.5.157.tgz
 wget https://www.klayout.org/downloads/Ubuntu-20/klayout_0.26.8-1_amd64.deb
