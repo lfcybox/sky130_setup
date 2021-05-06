@@ -26,68 +26,67 @@ sudo apt-get install -y gengetopt help2man groff pod2pdf bison flex libhpdf-dev 
 sudo apt-get install -y libopenmpi-dev 
 
 echo "Downloading files."
-#wget -O ngspice-33.tar.gz https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/33/ngspice-33.tar.gz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fngspice%2Ffiles%2Flatest%2Fdownload&ts=1604924821
 wget http://sourceforge.net/projects/ngspice/files/ng-spice-rework/34/ngspice-34.tar.gz
-wget http://opencircuitdesign.com/magic/archive/magic-8.3.78.tgz
-wget http://opencircuitdesign.com/netgen/archive/netgen-1.5.157.tgz
-wget https://www.klayout.org/downloads/Ubuntu-20/klayout_0.26.8-1_amd64.deb
-wget http://opencircuitdesign.com/qflow/archive/qflow-1.4.87.tgz
-wget http://opencircuitdesign.com/qrouter/archive/qrouter-1.4.83.tgz
-wget http://opencircuitdesign.com/xcircuit/archive/xcircuit-3.10.29.tgz
+wget http://opencircuitdesign.com/magic/archive/magic-8.3.160.tgz
+wget http://opencircuitdesign.com/netgen/archive/netgen-1.5.175.tgz
+wget https://www.klayout.org/downloads/Ubuntu-18/klayout_0.27-1_amd64.deb
+wget http://opencircuitdesign.com/qflow/archive/qflow-1.4.95.tgz
+wget http://opencircuitdesign.com/qrouter/archive/qrouter-1.4.84.tgz
+wget http://opencircuitdesign.com/xcircuit/archive/xcircuit-3.10.30.tgz
 
 
 echo "## Installing tools"
 echo "# Installing ngspice"
-tar zxvf ngspice-33.tar.gz
-cd ngspice-33
+tar zxvf ngspice-34.tar.gz
+cd ngspice-34
 mkdir release
 cd release
-../configure --with-x --enable-xspice --enable-cider --enable-openmp --with-readlines=yes --disable-debug
-make
+../configure --with-x --enable-xspice --enable-cider --enable-openmp --with-readline=yes --disable-debug
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
-cd ngspice-33
+cd ngspice-34
 mkdir build-lib
 cd build-lib
 ../configure --with-x --enable-xspice --enable-cider --enable-openmp --disable-debug --with-ngshared
-make
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
 echo "# Installing ngspice complete."
 echo "# Installing magic"
-tar zxvf magic-8.3.78.tgz
-cd magic-8.3.78
+tar zxvf magic-8.3.160.tgz
+cd magic-8.3.160
 ./configure
-make
+make -j$(nproc)
 sudo make install
-echo "set ngbehavior=hs" >> $HOME/.spiceinit
+#echo "set ngbehavior=hs" >> $HOME/.spiceinit #This belongs to ngspice and not magic, and I'm not sure it's still needed for version 34
 cd $START_PWD
 
 echo "# Installing klayout"
-sudo dpkg -i ./klayout_0.26.8-1_amd64.deb
+sudo dpkg -i ./klayout_0.27-1_amd64.deb
 sudo apt-get install -f -y
 
 echo "# Installing netgen"
-tar zxvf netgen-1.5.157.tgz
-cd netgen-1.5.157
+tar zxvf netgen-1.5.175.tgz
+cd netgen-1.5.175
 ./configure
-make
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
 echo "# Installing xcircuit"
-tar zxvf xcircuit-3.10.29.tgz
-cd xcircuit-3.10.29
-./configure && make && sudo make install
+tar zxvf xcircuit-3.10.30.tgz
+cd xcircuit-3.10.30
+./configure && make -j$(nproc) && sudo make install
 cd $START_PWD
 
 echo "# Install Yoss"
 git clone https://github.com/YosysHQ/yosys.git
 cd yosys
 make config-gcc
-make
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
@@ -97,29 +96,30 @@ cd graywolf
 mkdir build
 cd build
 cmake ..
-make
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
 echo "# Installing qrouter"
-tar zxvf qrouter-1.4.83.tgz
-cd qrouter-1.4.83
+tar zxvf qrouter-1.4.84.tgz
+cd qrouter-1.4.84
 ./configure
-make
+make -j$(nproc)
 sudo make install
-
+cd $START_PWD
 
 echo "# Installing qflow"
-tar zxvf qflow-1.4.87.tgz
-cd qflow-1.4.87
+tar zxvf qflow-1.4.95.tgz
+cd qflow-1.4.95
 ./configure
-make
+make -j$(nproc)
 sudo make install
 cd $START_PWD
 
 echo "# Installing gaw3"
 git clone https://github.com/StefanSchippers/xschem-gaw.git
 cd xschem-gaw
+autoreconf -f -i #https://stackoverflow.com/questions/33278928/how-to-overcome-aclocal-1-15-is-missing-on-your-system-warning/33279062
 ./configure
 make -j$(nproc)
 sudo make install
@@ -134,23 +134,23 @@ make -j$(nproc)
 sudo make install
 cd $START_PWD
 
-echo "## Installing EMS"
+#echo "## Installing EMS"
 # git clone --recursive https://github.com/thliebig/openEMS-Project.git
 # cd openEMS-Project
 # sudo ./update_openEMS.sh ~/opt/openEMS --with-hyp2mat --with-CTB --with-MPI
-sudo apt install -y libtinyxml-dev libhdf5-serial-dev libcgal-dev vtk6 libvtk6-qt-dev
-sudo apt install -y cython3 build-essential cython3 python3-numpy python3-matplotlib
-sudo apt install -y python3-scipy python3-h5py
-echo "$PWD"
+#sudo apt install -y libtinyxml-dev libhdf5-serial-dev libcgal-dev vtk6 libvtk6-qt-dev
+#sudo apt install -y cython3 build-essential cython3 python3-numpy python3-matplotlib
+#sudo apt install -y python3-scipy python3-h5py
+#echo "$PWD"
 
-git clone https://github.com/thliebig/openEMS-Project.git
-cd openEMS-Project
-git submodule init
-git submodule update
+#git clone https://github.com/thliebig/openEMS-Project.git
+#cd openEMS-Project
+#git submodule init
+#git submodule update
 
-export OPENEMS=/opt/openems
-sudo ./update_openEMS.sh $OPENEMS
-cd CSXCAD/python; python3 setup.py build_ext -I$OPENEMS/include -L$OPENEMS/lib -R$OPENEMS/lib; sudo python3 setup.py install; cd ../..
-cd openEMS/python; python3 setup.py build_ext -I$OPENEMS/include -L$OPENEMS/lib -R$OPENEMS/lib; sudo python3 setup.py install; cd ../..
+#export OPENEMS=/opt/openems
+#sudo ./update_openEMS.sh $OPENEMS
+#cd CSXCAD/python; python3 setup.py build_ext -I$OPENEMS/include -L$OPENEMS/lib -R$OPENEMS/lib; sudo python3 setup.py install; cd ../..
+#cd openEMS/python; python3 setup.py build_ext -I$OPENEMS/include -L$OPENEMS/lib -R$OPENEMS/lib; sudo python3 setup.py install; cd ../..
 
 
